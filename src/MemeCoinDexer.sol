@@ -62,6 +62,9 @@ contract MemeCoinDexer is Ownable {
         swapETH(wethAmount);
 
         /// @dev Creating and initializing pool
+        /// @dev Bug here: https://github.com/Uniswap/v3-periphery/issues/386#issuecomment-3376131393
+        /// @TODO add below check for line 68 to avoid EvmError: Revert
+        // (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
         INonfungiblePositionManager(i_nftPositionManager).createAndInitializePoolIfNecessary(memeCoinAddress, i_wrappedNativeToken, FEE, INITIAL_PRICE);
 
         /// @dev Approve tokens for the position manager
